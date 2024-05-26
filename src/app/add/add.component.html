@@ -1,0 +1,69 @@
+<div class="row">
+    
+    <div class= "d-flex col-md-2 flex-column"    style= "background-image: linear-gradient(to bottom,rgb(41, 119, 143),rgb(131, 155, 167)); height: 89vh;">
+        <a routerLink="/dashboard" class="my-4 ms-4 text-white" style="text-decoration: none;" href="" >Home</a>
+        <a routerLink="/employee" class="my-4  ms-4 text-white" style="text-decoration: none;" href="" >Users</a>
+    </div>
+
+    <div class="col md-10 p-3 mt-2" >
+        <h4 class="text-center mt-4">Add new user details </h4>
+<div class="row">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8 mt-5">
+    <div class="shadow p-5">
+        
+        <form  (ngSubmit)="addEmployee()" class="">  
+            <!-- binding by ngmodel  by ng model also put name atribute becoz it  is in formtag also provide required-->
+            <input #employeeId="ngModel" type="text" class="form-control my-4" 
+             placeholder="User Id" name="id" [(ngModel)]="emplooye.id" required pattern="[0-9]*">
+             <span  *ngIf="employeeId.invalid && employeeId.touched" class="text-danger">*Invalid Input</span>
+
+            <input #empname="ngModel" type="text" class="form-control my-4" 
+             placeholder="username" name="uname" [(ngModel)]="emplooye.username" required pattern="^[a-zA-Z]{3,}$">
+             <span *ngIf="empname.invalid && empname.touched" class="text-danger">*Invalid Input</span>
+
+            <input #empMail="ngModel" type="text"  class="form-control my-4" 
+            placeholder="email" name="mail" [(ngModel)]="emplooye.email" required email>
+            <span *ngIf="empMail.invalid && empMail.touched" class="text-danger">*Invalid Input</span>
+            <div class="form-floating">
+                <!--binding status by ng model also required-->
+                <select #empStatus="ngModel" class="form-select mt-1" id="floatingSelect" aria-label="Floating label select example"
+                 name="status" [(ngModel)]="emplooye.status" required>
+                 
+                  <option selected></option>
+                 
+                  <option value="1">Active</option>
+                  <option value="2">Inactive</option>
+                </select>
+                <label for="floatingSelect">status</label>
+                <span  *ngIf="empStatus.invalid && empStatus.touched" class="text-danger">*Invalid Input</span>
+              </div>
+      
+
+            <div class="mt-3">
+                <!-- calling cancelemployee buton  and submiting button and also call in form ngsubmit il -->
+                <button (click)="cancelEmployee()" class="btn btn-warning"> cancel</button>
+                <button  type="submit" class="btn btn-success ms-3"> Add</button>
+            </div>
+        </form>
+       
+
+          
+    </div>
+    </div>
+  
+
+
+    <div class="col-md-2"></div>
+</div>
+
+    </div>
+    
+
+
+
+
+
+</div>
+

@@ -1,0 +1,126 @@
+<div class="row">
+
+    <div class="d-flex col-md-2 flex-column"
+        style="background-image: linear-gradient(to bottom,rgb(41, 119, 143),rgb(131, 155, 167)); height: 89vh;">
+        <a routerLink="/dashboard" class=" text-white my-4 ms-4" href="">Home</a>
+        <a routerLink="/employee" class=" text-white my-4  ms-4" href="">Emplooyees</a>
+    </div>
+
+
+
+    <div class="col-md-10 p-4">
+        <div class="d-flex" style="height: 5vh;">
+            <h3 class="text-primary">Emplooye list</h3>
+        <a class="ms-auto" routerLink="/add">    <button class="btn btn-outline-primary ms-auto  "> <i class="fa-solid fa-user-plus me-2"></i>Add </button></a>
+        </div>
+    
+        <!-- for date  -->
+        <h4 style="color: rgb(107, 99, 99);" class="mt-2">{{adminLoginTime | date:"short"}}</h4>
+
+        <div class="d-flex mt-4">
+            <form class="d-flex">
+                <input [(ngModel)]="searchKey" type="text" name="search" placeholder="enter user name" class="form-control" [(ngModel)]="searchKey">
+                <div class="btn-group" role="group">
+                    <button  type="button" class="btn btn-primary dropdown-toggle ms-3" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        sort
+                    </button>
+                    <ul class="dropdown-menu">
+
+                        <!-- sorting method event sort pass in click from employye components -->
+
+                        <li><a class="dropdown-item" (click)="sortId()">By Id</a></li>
+                        <li><a class="dropdown-item" (click)="sortName()">By name</a></li>
+                    </ul>
+                </div>
+
+
+            </form>
+            <button class="btn btn-success ms-auto" (click)="generatePdf()"> export </button>
+
+
+        </div>
+
+        <div class="row w-100 mt-5">
+            <div class="col-md-1"></div>
+
+            <div class="col-md-10">
+                <table class="table shadow">
+                    <thead>
+                        <tr>
+                            <th class="p-4 bg-secondary text-white">User Id</th>
+                            <th class="p-4 bg-secondary text-white">User name</th>
+                            <th class="p-4 bg-secondary text-white">Email</th>
+                            <th class="p-4 bg-secondary text-white">status</th>
+                            <th class="p-4 bg-secondary text-white text-center">Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <!-- *ngfor  telling there is item , employye ,, hidden is given for hidding ==1 for 1st one hiding -->
+                         <!-- all employee is content name | is pipe symbol search is pipe name search key is based on transform  -->
+                        <tr *ngFor="let employee of allEmployee | search:searchKey | paginate:{ itemsPerPage:5,currentPage:p}"  [hidden]="employee.id=='1'">
+                            <td>{{employee.id}}</td>
+                            <td>{{employee.username}}</td>
+                            <td>{{employee.email}}</td>
+
+                            <th> <button [ngClass]="employee.status=='1'?'btn btn-success':'btn btn-danger'">{{employee.status=='1'?'Active':'Inactive'}}</button></th>
+
+                            <th class="d-flex justify-content-evenly">
+                                
+                               <!-- edit/employee.id for editing -->
+                               
+                                <button class="btn btn-outline-primary"><a routerLink="/edit/{{employee.id}}"><i
+                              class="fa-solid fa-pen"></i></a> </button>
+
+                              <!-- from emplooye componnets click giving -->
+                                <button (click)="deleteEmployee(employee.id)" class="btn btn-outline-danger"><a><i class="fa-solid fa-trash"></i></a>
+                                </button>
+
+                            </th>
+
+                        </tr>
+
+
+                        <!-- *ngif for  checking one condtion , one or more for terinary ,,checking if there emplooyes,checking length,,conditional rendering it is structural directive -->
+<!-- directives for = * | decritive = at the rate  | template variable=  # -->
+
+                   <tr *ngif="(allEmployee| search:searchKey).length==0">
+
+                      <p class="text-danger text-center">user does not exit</p>
+                   </tr>
+                    
+
+
+
+                    </tbody>
+
+
+
+                </table>
+
+              <div class="w-100 d-flex justify-content-center align-items-center mt-5">
+                <!-- for pagination -->
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+              </div>
+
+
+            </div>
+
+            <div class="col-md-1"></div>
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+
+</div>
